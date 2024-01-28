@@ -23,5 +23,18 @@ describe('Login spec', () => {
     cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
 
     cy.url().should('include', '/sessions')
+    cy.pause();
+
+    })
+
+  it('Login failed', () => {
+    cy.visit('/login')
+
+
+    cy.get('input[formControlName=email]').type(`${"yoga@studio.com"}{enter}{enter}`)
+
+    cy.contains('An error occurred')
+
+    //cy.url().should('not include', '/sessions')
   })
 });

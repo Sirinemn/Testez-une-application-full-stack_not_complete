@@ -3,18 +3,38 @@
 // with Intellisense and code completion in your
 // IDE or Text Editor.
 // ***********************************************
-// declare namespace Cypress {
-//   interface Chainable<Subject = any> {
-//     customCommand(param: any): typeof customCommand;
-//   }
-// }
+ declare namespace Cypress {
+   interface Chainable<Subject = any> {
+     login(email: string, password: string): typeof login;
+   }
+}
 //
-// function customCommand(param: any): void {
-//   console.warn(param);
-// }
+ function login(email: string, password: string): void {
+    cy.visit('/login')
+
+    cy.intercept('POST', '/api/auth/login', {
+      body: {
+        id: 1,
+        username: 'userName',
+        firstName: 'firstName',
+        lastName: 'lastName',
+        admin: true
+      },
+    })
+
+    cy.intercept(
+      {
+        method: 'GET',
+        url: '/api/session',
+      },
+      []).as('session')
+
+    cy.get('input[formControlName=email]').type(email)
+    cy.get('input[formControlName=password]').type(`${password}{enter}{enter}`)
+}
 //
 // NOTE: You can use it like so:
-// Cypress.Commands.add('customCommand', customCommand);
+Cypress.Commands.add('login', login);
 //
 // ***********************************************
 // This example commands.js shows you how to
