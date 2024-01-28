@@ -19,7 +19,7 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let authServiceMock: any;
   let fixture: ComponentFixture<LoginComponent>;
-  let sessionServiceMock : any;
+  let sessionServiceMock: any;
   let loginRequest: LoginRequest;
   let form: FormBuilder;
   let router: Router;
@@ -37,9 +37,9 @@ describe('LoginComponent', () => {
         MatIconModule,
         MatFormFieldModule,
         MatInputModule,
-        ReactiveFormsModule]
-    })
-      .compileComponents();
+        ReactiveFormsModule,
+      ],
+    }).compileComponents();
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -48,19 +48,23 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-    function updateForm(userEmail : string, userPassword: string){
+  function updateForm(userEmail: string, userPassword: string) {
     component.form.controls['email'].setValue(userEmail);
     component.form.controls['password'].setValue(userPassword);
   }
-  beforeEach(()=> {
-    authServiceMock = {login: jest.fn};
-    sessionServiceMock = {logIn: jest.fn};
-    component = new LoginComponent(authServiceMock, form,router,sessionServiceMock)
-  })
+  beforeEach(() => {
+    authServiceMock = { login: jest.fn };
+    sessionServiceMock = { logIn: jest.fn };
+    component = new LoginComponent(
+      authServiceMock,
+      form,
+      router,
+      sessionServiceMock
+    );
+  });
   it('', () => {
-    updateForm("yoga@studio.com","test!1234");
+    updateForm('test@test.fr', 'test1234');
     expect(component.submit()).toBeTruthy();
     expect(sessionServiceMock.logIn()).toBeTruthy();
-   
-   } )
+  });
 });
